@@ -8,19 +8,17 @@ import { ChildProfileSetup } from './ChildProfileSetup';
 import { ProgressBar } from './ProgressBar';
 import { QuestionCard } from './QuestionCard';
 import { CalculatingScreen } from './CalculatingScreen';
+import { trackEvent } from '../../lib/tracker';
 
 export const QuizRunner: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { childProfile, answers, setAnswer, calculateAndSetResult, startNewQuiz } = useQuiz();
   
-  // Phase: 'profile' | 'questions' | 'calculating'
-  // Always begin on 'profile' setup so user can enter a new child or choose a child
   const [phase, setPhase] = useState<'profile' | 'questions' | 'calculating'>('profile');
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    // If explicitly navigated with ?new=true, reset active test
     if (searchParams?.get('new') === 'true') {
       startNewQuiz();
       setPhase('profile');
@@ -32,6 +30,10 @@ export const QuizRunner: React.FC = () => {
   }, [currentIndex, phase]);
 
   const handleProfileComplete = () => {
+    trackEvent('QUIZ_START', {
+      childName: childProfile.name,
+      ageGroup: childProfile.ageGroup,
+    });
     setPhase('questions');
   };
 
@@ -43,7 +45,13 @@ export const QuizRunner: React.FC = () => {
       if (currentIndex < QUESTIONS.length - 1) {
         setCurrentIndex((prev) => prev + 1);
       } else {
-        calculateAndSetResult();
+        const res = calculateAndSetResult();
+        trackEvent('QUIZ_COMPLETE', {
+          childName: childProfile.name,
+          ageGroup: childProfile.ageGroup,
+          archetypeId: res.primaryArchetype.id,
+          archetypeTitle: res.primaryArchetype.title,
+        });
         setPhase('calculating');
       }
     }, 180);

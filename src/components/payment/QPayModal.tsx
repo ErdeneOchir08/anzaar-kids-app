@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuiz } from '../../context/QuizContext';
 import { X, CheckCircle2, QrCode, ShieldCheck, Loader2, Sparkles, ExternalLink } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { trackEvent } from '../../lib/tracker';
 
 interface QPayModalProps {
   isOpen: boolean;
@@ -19,7 +20,7 @@ interface BankAppItem {
 }
 
 export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess }) => {
-  const { childProfile, unlockPremium } = useQuiz();
+  const { childProfile, result, unlockPremium } = useQuiz();
   const [isLoadingInvoice, setIsLoadingInvoice] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -41,6 +42,14 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
     async function loadInvoice() {
       try {
         setIsLoadingInvoice(true);
+        trackEvent('PAYMENT_INIT', {
+          childName: childProfile.name,
+          ageGroup: childProfile.ageGroup,
+          archetypeId: result?.primaryArchetype.id,
+          archetypeTitle: result?.primaryArchetype.title,
+          amount: 14900,
+        });
+
         const res = await fetch('/api/qpay/create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -72,7 +81,7 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
     return () => {
       isMounted = false;
     };
-  }, [isOpen, childProfile.name]);
+  }, [isOpen, childProfile.name, childProfile.ageGroup, result?.primaryArchetype.id, result?.primaryArchetype.title]);
 
   // Auto-poll payment status every 4 seconds
   useEffect(() => {
@@ -101,6 +110,15 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
     setIsProcessing(false);
     setIsCompleted(true);
     unlockPremium();
+
+    trackEvent('PAYMENT_SUCCESS', {
+      childName: childProfile.name,
+      ageGroup: childProfile.ageGroup,
+      archetypeId: result?.primaryArchetype.id,
+      archetypeTitle: result?.primaryArchetype.title,
+      invoiceId,
+      amount: 14900,
+    });
 
     try {
       confetti({

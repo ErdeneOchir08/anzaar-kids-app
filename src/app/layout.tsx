@@ -3,6 +3,7 @@ import './globals.css';
 import { QuizProvider } from '../context/QuizContext';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
+import { PageTracker } from '../components/analytics/PageTracker';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="mn" className="overflow-x-hidden">
       <body className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col selection:bg-anzaar-200 selection:text-anzaar-900 text-zinc-900 bg-[#fafaf8]">
         <QuizProvider>
+          <PageTracker />
           <Header />
           <main className="flex-1 w-full max-w-full overflow-x-hidden">{children}</main>
           <Footer />
