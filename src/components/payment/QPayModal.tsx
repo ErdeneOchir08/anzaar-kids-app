@@ -143,7 +143,7 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
-      <div className="w-full max-w-md bg-white rounded-[32px] p-6 sm:p-7 border border-zinc-200 shadow-2xl relative my-8">
+      <div className="w-full max-w-md bg-white rounded-[32px] p-6 sm:p-7 border border-zinc-200 shadow-2xl relative my-auto max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
         <button
           type="button"

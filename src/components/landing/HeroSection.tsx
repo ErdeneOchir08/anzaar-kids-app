@@ -74,18 +74,18 @@ export const HeroSection: React.FC = () => {
         </div>
 
         {/* Trust Badges */}
-        <div className="mt-10 rounded-3xl bg-white/70 border border-zinc-200/70 p-4 shadow-sm grid grid-cols-3 gap-2 text-center">
+        <div className="mt-10 rounded-3xl bg-white/80 border border-zinc-200/80 p-3.5 sm:p-4 shadow-sm grid grid-cols-3 gap-1.5 sm:gap-2 text-center">
           <div>
-            <p className="text-xl font-black text-zinc-900">5,400+</p>
-            <p className="text-[11px] text-zinc-500 font-medium">Оролцсон эцэг эх</p>
+            <p className="text-lg sm:text-xl font-black text-zinc-900">5,400+</p>
+            <p className="text-[10px] sm:text-[11px] text-zinc-500 font-medium leading-tight">Оролцсон эцэг эх</p>
           </div>
           <div className="border-x border-zinc-200">
-            <p className="text-xl font-black text-indigo-600">5 Төрөл</p>
-            <p className="text-[11px] text-zinc-500 font-medium">Зан төлөвийн хэв шинж</p>
+            <p className="text-lg sm:text-xl font-black text-indigo-600">5 Төрөл</p>
+            <p className="text-[10px] sm:text-[11px] text-zinc-500 font-medium leading-tight">Зан төлөвийн хэв шинж</p>
           </div>
           <div>
-            <p className="text-xl font-black text-rose-500">4.9 / 5.0</p>
-            <p className="text-[11px] text-zinc-500 font-medium">Сэтгэл ханамж</p>
+            <p className="text-lg sm:text-xl font-black text-rose-500">4.9 / 5.0</p>
+            <p className="text-[10px] sm:text-[11px] text-zinc-500 font-medium leading-tight">Сэтгэл ханамж</p>
           </div>
         </div>
       </div>

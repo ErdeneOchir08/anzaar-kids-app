@@ -11,7 +11,7 @@ interface RadarChartProps {
 
 export const RadarChart: React.FC<RadarChartProps> = ({ scores, size = 280 }) => {
   const center = size / 2;
-  const radius = (size / 2) - 40;
+  const radius = (size / 2) - 45;
 
   const dims: { id: DimensionId; angle: number; label: string; color: string }[] = [
     { id: 'sensitivity', angle: -90, label: 'Мэдрэг байдал', color: DIMENSIONS.sensitivity.color },
@@ -40,8 +40,11 @@ export const RadarChart: React.FC<RadarChartProps> = ({ scores, size = 280 }) =>
   const rings = [0.25, 0.5, 0.75, 1];
 
   return (
-    <div className="relative flex flex-col items-center justify-center">
-      <svg width={size} height={size} className="overflow-visible">
+    <div className="relative w-full flex flex-col items-center justify-center p-2">
+      <svg
+        viewBox={`0 0 ${size} ${size}`}
+        className="w-full max-w-[280px] h-auto overflow-visible select-none"
+      >
         {/* Background webs */}
         {rings.map((ring, idx) => {
           const ringPoints = dims
@@ -110,7 +113,7 @@ export const RadarChart: React.FC<RadarChartProps> = ({ scores, size = 280 }) =>
               y={y}
               textAnchor="middle"
               dominantBaseline="central"
-              className="text-[11px] font-bold fill-zinc-800"
+              className="text-[10.5px] font-extrabold fill-zinc-800"
             >
               {d.label} ({percentage}%)
             </text>
