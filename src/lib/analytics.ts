@@ -18,19 +18,19 @@ export interface AnalyticsStore {
   events: AnalyticsEvent[];
 }
 
-const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
-const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
-
-let redisClient: Redis | null = null;
-
 function getRedis(): Redis | null {
-  if (redisClient) return redisClient;
-  if (REDIS_URL && REDIS_TOKEN) {
-    redisClient = new Redis({
-      url: REDIS_URL,
-      token: REDIS_TOKEN,
-    });
-    return redisClient;
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (url && token) {
+    try {
+      return new Redis({
+        url,
+        token,
+      });
+    } catch (e) {
+      console.error('Failed to init Upstash Redis client', e);
+    }
   }
   return null;
 }
@@ -61,7 +61,7 @@ export async function getAnalyticsData(): Promise<AnalyticsStore> {
       });
 
       return {
-        totalVisitors: Number(visitors),
+        totalVisitors: Number(visitors) || 0,
         events,
       };
     } catch (err) {
