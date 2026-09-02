@@ -7,6 +7,17 @@
   --foreground: #18181b;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   color: var(--foreground);
   background-color: var(--background);
