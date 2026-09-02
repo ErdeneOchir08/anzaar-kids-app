@@ -14,7 +14,7 @@ export const ArchetypePreviewSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-10 px-4 max-w-xl mx-auto bg-gradient-to-b from-transparent via-indigo-50/30 to-transparent">
+    <section id="archetypes" className="py-10 px-4 max-w-xl mx-auto bg-gradient-to-b from-transparent via-indigo-50/30 to-transparent">
       <div className="text-center mb-7">
         <span className="text-[11px] font-extrabold uppercase tracking-wider text-rose-600 bg-rose-50 px-3 py-1 rounded-full border border-rose-200/60">
           Сэтгэл зүйн 5 хэв шинж

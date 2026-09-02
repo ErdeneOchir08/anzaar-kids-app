@@ -36,7 +36,7 @@ export const BenefitsGrid: React.FC = () => {
   ];
 
   return (
-    <section className="py-10 px-4 max-w-xl mx-auto">
+    <section id="benefits" className="py-10 px-4 max-w-xl mx-auto">
       <div className="text-center mb-7">
         <span className="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60">
           Бодит үнэ цэн

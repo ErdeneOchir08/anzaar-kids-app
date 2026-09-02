@@ -22,7 +22,7 @@ export const FaqSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-8 px-4 max-w-xl mx-auto mb-10">
+    <section id="faq" className="py-8 px-4 max-w-xl mx-auto mb-10">
       <div className="text-center mb-6">
         <h2 className="text-xl font-bold text-stone-900">Түгээмэл асуулт, хариулт</h2>
       </div>
