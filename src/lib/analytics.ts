@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import { Redis } from '@upstash/redis';
 
 export interface AnalyticsEvent {
   id: string;
@@ -19,74 +18,99 @@ export interface AnalyticsStore {
   events: AnalyticsEvent[];
 }
 
-// 100% Clean initial live store with zero fake records
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+let redisClient: Redis | null = null;
+
+function getRedis(): Redis | null {
+  if (redisClient) return redisClient;
+  if (REDIS_URL && REDIS_TOKEN) {
+    redisClient = new Redis({
+      url: REDIS_URL,
+      token: REDIS_TOKEN,
+    });
+    return redisClient;
+  }
+  return null;
+}
+
+// In-memory fallback
 let inMemoryStore: AnalyticsStore = {
   totalVisitors: 0,
   events: [],
 };
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const DATA_FILE = path.join(DATA_DIR, 'analytics.json');
+export async function getAnalyticsData(): Promise<AnalyticsStore> {
+  const redis = getRedis();
 
-function ensureDataFile(): void {
-  try {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
-    }
-    if (!fs.existsSync(DATA_FILE)) {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(inMemoryStore, null, 2));
-    }
-  } catch (e) {
-    // Serverless read-only fallback
-  }
-}
+  if (redis) {
+    try {
+      const visitors = (await redis.get<number>('anzaar:visitors')) || 0;
+      const rawEvents = await redis.lrange<any>('anzaar:events', 0, 100);
 
-export function getAnalyticsData(): AnalyticsStore {
-  try {
-    ensureDataFile();
-    if (fs.existsSync(DATA_FILE)) {
-      const content = fs.readFileSync(DATA_FILE, 'utf8');
-      const parsed = JSON.parse(content);
-      inMemoryStore = parsed;
-      return parsed;
+      const events: AnalyticsEvent[] = (rawEvents || []).map((e) => {
+        if (typeof e === 'string') {
+          try {
+            return JSON.parse(e);
+          } catch {
+            return e;
+          }
+        }
+        return e;
+      });
+
+      return {
+        totalVisitors: Number(visitors),
+        events,
+      };
+    } catch (err) {
+      console.error('Redis read error, using fallback', err);
     }
-  } catch (e) {
-    // Return memory store
   }
+
   return inMemoryStore;
 }
 
-export function recordAnalyticsEvent(event: Omit<AnalyticsEvent, 'id' | 'timestamp'>): AnalyticsEvent {
+export async function recordAnalyticsEvent(
+  event: Omit<AnalyticsEvent, 'id' | 'timestamp'>
+): Promise<AnalyticsEvent> {
   const newEvent: AnalyticsEvent = {
     ...event,
     id: `evt_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
     timestamp: new Date().toISOString(),
   };
 
-  const current = getAnalyticsData();
+  const redis = getRedis();
+
+  if (redis) {
+    try {
+      if (newEvent.type === 'PAGE_VIEW') {
+        await redis.incr('anzaar:visitors');
+      }
+
+      // Prepend event to the list
+      await redis.lpush('anzaar:events', JSON.stringify(newEvent));
+      // Keep latest 500 events
+      await redis.ltrim('anzaar:events', 0, 500);
+
+      if (newEvent.type === 'PAYMENT_SUCCESS') {
+        await redis.lpush('anzaar:payments', JSON.stringify(newEvent));
+      }
+
+      return newEvent;
+    } catch (err) {
+      console.error('Redis write error, using fallback', err);
+    }
+  }
+
+  // Fallback in-memory
   if (newEvent.type === 'PAGE_VIEW') {
-    current.totalVisitors = (current.totalVisitors || 0) + 1;
+    inMemoryStore.totalVisitors += 1;
   }
-  
-  // Ensure array exists
-  if (!Array.isArray(current.events)) {
-    current.events = [];
-  }
-
-  current.events.unshift(newEvent);
-
-  // Safely keep latest 500 events
-  if (current.events.length > 500) {
-    current.events = current.events.slice(0, 500);
-  }
-
-  inMemoryStore = current;
-
-  try {
-    ensureDataFile();
-    fs.writeFileSync(DATA_FILE, JSON.stringify(current, null, 2));
-  } catch (e) {
-    // Serverless fallback
+  inMemoryStore.events.unshift(newEvent);
+  if (inMemoryStore.events.length > 500) {
+    inMemoryStore.events = inMemoryStore.events.slice(0, 500);
   }
 
   return newEvent;

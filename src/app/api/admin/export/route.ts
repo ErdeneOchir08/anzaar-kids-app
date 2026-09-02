@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAnalyticsData } from '@/lib/analytics';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
-    const data = getAnalyticsData();
+    const data = await getAnalyticsData();
     const payments = data.events.filter((e) => e.type === 'PAYMENT_SUCCESS');
 
     // Generate CSV Content

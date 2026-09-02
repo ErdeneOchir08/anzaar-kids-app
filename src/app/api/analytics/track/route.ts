@@ -4,7 +4,7 @@ import { recordAnalyticsEvent } from '@/lib/analytics';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const event = recordAnalyticsEvent({
+    const event = await recordAnalyticsEvent({
       type: body.type || 'PAGE_VIEW',
       childName: body.childName,
       ageGroup: body.ageGroup,
