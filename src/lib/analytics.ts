@@ -12,7 +12,6 @@ export interface AnalyticsEvent {
   invoiceId?: string;
   amount?: number;
   userAgent?: string;
-  ip?: string;
 }
 
 export interface AnalyticsStore {
@@ -20,49 +19,10 @@ export interface AnalyticsStore {
   events: AnalyticsEvent[];
 }
 
-// In-memory store fallback for serverless environments with local file persistence
+// 100% Clean initial live store with zero fake records
 let inMemoryStore: AnalyticsStore = {
-  totalVisitors: 128,
-  events: [
-    {
-      id: 'evt_init_1',
-      type: 'PAYMENT_SUCCESS',
-      timestamp: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
-      childName: 'Ану',
-      ageGroup: 'preschool',
-      archetypeId: 'gentle_observer',
-      archetypeTitle: 'Зөөлөн Мэдрэмжтэй Ажиглагч',
-      invoiceId: 'ANZ_1788310025',
-      amount: 14900,
-    },
-    {
-      id: 'evt_init_2',
-      type: 'PAYMENT_SUCCESS',
-      timestamp: new Date(Date.now() - 1000 * 60 * 120).toISOString(),
-      childName: 'Тэмүүлэн',
-      ageGroup: 'school',
-      archetypeId: 'energetic_pioneer',
-      archetypeTitle: 'Эрч хүчтэй Манлайлагч',
-      invoiceId: 'ANZ_1788308412',
-      amount: 14900,
-    },
-    {
-      id: 'evt_init_3',
-      type: 'QUIZ_COMPLETE',
-      timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
-      childName: 'Билгүүн',
-      ageGroup: 'preschool',
-      archetypeId: 'focused_inquirer',
-      archetypeTitle: 'Бодлоготой Судлаач',
-    },
-    {
-      id: 'evt_init_4',
-      type: 'QUIZ_START',
-      timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
-      childName: 'Энэрэл',
-      ageGroup: 'toddler',
-    },
-  ],
+  totalVisitors: 0,
+  events: [],
 };
 
 const DATA_DIR = path.join(process.cwd(), 'data');
@@ -87,12 +47,11 @@ export function getAnalyticsData(): AnalyticsStore {
     if (fs.existsSync(DATA_FILE)) {
       const content = fs.readFileSync(DATA_FILE, 'utf8');
       const parsed = JSON.parse(content);
-      // Merge with memory
       inMemoryStore = parsed;
       return parsed;
     }
   } catch (e) {
-    // Return memory fallback
+    // Return memory store
   }
   return inMemoryStore;
 }
@@ -106,13 +65,19 @@ export function recordAnalyticsEvent(event: Omit<AnalyticsEvent, 'id' | 'timesta
 
   const current = getAnalyticsData();
   if (newEvent.type === 'PAGE_VIEW') {
-    current.totalVisitors += 1;
+    current.totalVisitors = (current.totalVisitors || 0) + 1;
   }
+  
+  // Ensure array exists
+  if (!Array.isArray(current.events)) {
+    current.events = [];
+  }
+
   current.events.unshift(newEvent);
 
-  // Keep latest 200 events
-  if (current.events.length > 200) {
-    current.events = current.events.slice(0, 200);
+  // Safely keep latest 500 events
+  if (current.events.length > 500) {
+    current.events = current.events.slice(0, 500);
   }
 
   inMemoryStore = current;

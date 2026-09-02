@@ -18,6 +18,7 @@ import {
   Layers,
   Calendar,
   ShieldCheck,
+  Download,
   ChevronRight
 } from 'lucide-react';
 
@@ -131,6 +132,10 @@ export default function AdminDashboardPage() {
     setIsAuthenticated(false);
   };
 
+  const handleExportCsv = () => {
+    window.open('/api/admin/export', '_blank');
+  };
+
   // 1. Password Lock Screen
   if (!isAuthenticated) {
     return (
@@ -203,27 +208,37 @@ export default function AdminDashboardPage() {
             </h1>
           </div>
           <p className="text-xs text-zinc-500 mt-1">
-            Бүх төлбөр, хэрэглэгчийн урсгал, хөрвүүлэлтийн бодит цагийн үзүүлэлт
+            100% Бодит хэрэглэгчийн урсгал ба QPay төлбөрийн үзүүлэлт
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
+          {/* Export CSV Button */}
+          <button
+            type="button"
+            onClick={handleExportCsv}
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-700 hover:text-zinc-900 bg-white hover:bg-zinc-50 border border-zinc-200 px-3 py-2 rounded-xl shadow-sm transition-all"
+          >
+            <Download className="w-3.5 h-3.5 text-indigo-600" />
+            <span>CSV Татах</span>
+          </button>
+
           {/* Live Sync Indicator */}
           <button
             type="button"
             onClick={() => setIsAutoRefresh(!isAutoRefresh)}
-            className={`inline-flex items-center gap-2 text-xs font-bold px-3.5 py-2 rounded-xl border transition-all ${
+            className={`inline-flex items-center gap-2 text-xs font-bold px-3 py-2 rounded-xl border transition-all ${
               isAutoRefresh
                 ? 'bg-emerald-50 text-emerald-800 border-emerald-200 shadow-sm'
                 : 'bg-zinc-100 text-zinc-600 border-zinc-200'
             }`}
           >
             <span
-              className={`w-2.5 h-2.5 rounded-full ${
+              className={`w-2 h-2 rounded-full ${
                 isAutoRefresh ? 'bg-emerald-500 animate-pulse' : 'bg-zinc-400'
               }`}
             />
-            <span>{isAutoRefresh ? 'Шууд холболт идэвхтэй (4с)' : 'Автомат шинэчлэл зогссон'}</span>
+            <span>{isAutoRefresh ? 'Шууд (4с)' : 'Зогссон'}</span>
           </button>
 
           <button
@@ -275,7 +290,7 @@ export default function AdminDashboardPage() {
             {(stats?.kpis.totalVisitors || 0).toLocaleString()}
           </p>
           <p className="text-[11px] text-zinc-500 mt-1 font-medium">
-            Вебсайтад зочилсон нийт хандалт
+            Вебсайтад зочилсон бодит хандалт
           </p>
         </div>
 
@@ -321,7 +336,7 @@ export default function AdminDashboardPage() {
               <h3 className="text-sm sm:text-base font-black text-zinc-900">
                 Хэрэглэгчийн Хөрвүүлэлтийн Замнал (Funnel)
               </h3>
-              <p className="text-xs text-zinc-500">Алхам бүр дэх хандалт ба гээгдэл</p>
+              <p className="text-xs text-zinc-500">Алхам бүр дэх бодит хандалт ба гээгдэл</p>
             </div>
           </div>
 
@@ -340,7 +355,7 @@ export default function AdminDashboardPage() {
                 <div className="w-full h-3 bg-zinc-100 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-indigo-500 to-rose-500 rounded-full transition-all duration-500"
-                    style={{ width: `${Math.max(item.percentage, 2)}%` }}
+                    style={{ width: `${Math.max(item.percentage, item.count > 0 ? 3 : 0)}%` }}
                   />
                 </div>
               </div>
@@ -381,7 +396,7 @@ export default function AdminDashboardPage() {
               <CreditCard className="w-4 h-4 text-indigo-600" />
               <span>Шууд Төлбөрийн Түүх (QPAY)</span>
             </h3>
-            <p className="text-xs text-zinc-500">Баталгаажсан 14,900₮ захиалгууд</p>
+            <p className="text-xs text-zinc-500">Баталгаажсан бодит 14,900₮ захиалгууд</p>
           </div>
 
           <div className="relative w-full sm:w-64">
@@ -397,8 +412,9 @@ export default function AdminDashboardPage() {
         </div>
 
         {filteredPayments.length === 0 ? (
-          <div className="text-center py-10 text-zinc-400 text-xs">
-            Төлбөрийн мэдээлэл олдсонгүй
+          <div className="text-center py-10 text-zinc-400 text-xs space-y-1">
+            <p className="font-bold">Одоогоор төлбөрийн шинэ гүйлгээ хийгдээгүй байна</p>
+            <p className="text-[11px] text-zinc-400">Хэрэглэгчид QPay-ээр төлбөр хийх үед энд автоматаар бодит цагт гарч ирнэ.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -453,28 +469,34 @@ export default function AdminDashboardPage() {
           </h3>
         </div>
 
-        <div className="space-y-2 max-h-60 overflow-y-auto">
-          {stats?.recentActivity.map((act) => (
-            <div
-              key={act.id}
-              className="flex items-center justify-between p-3 bg-zinc-50/70 rounded-2xl border border-zinc-200/60 text-xs"
-            >
-              <div className="flex items-center gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-indigo-500" />
-                <span className="font-bold text-zinc-800">
-                  {act.type === 'PAGE_VIEW' && '🌐 Шинэ зочин вебсайтад хандлаа'}
-                  {act.type === 'QUIZ_START' && `📝 ${act.childName || 'Хүүхэд'}-ийн сорилыг эхлүүллээ`}
-                  {act.type === 'QUIZ_COMPLETE' && `🎯 ${act.childName || 'Хүүхэд'}-ийн оношилгоо дууслаа: «${act.archetypeTitle}»`}
-                  {act.type === 'PAYMENT_INIT' && `💳 ${act.childName || 'Хүүхэд'}-ийн 14,900₮ QPay нэхэмжлэх үүслээ`}
-                  {act.type === 'PAYMENT_SUCCESS' && `💰 ${act.childName || 'Хүүхэд'}-ийн хөтөч ном 14,900₮-өөр амжилттай худалдан авагдлаа!`}
+        {stats?.recentActivity.length === 0 ? (
+          <div className="text-center py-6 text-zinc-400 text-xs">
+            Шинэ үйлдэл хүлээгдэж байна...
+          </div>
+        ) : (
+          <div className="space-y-2 max-h-60 overflow-y-auto">
+            {stats?.recentActivity.map((act) => (
+              <div
+                key={act.id}
+                className="flex items-center justify-between p-3 bg-zinc-50/70 rounded-2xl border border-zinc-200/60 text-xs"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2 h-2 rounded-full bg-indigo-500" />
+                  <span className="font-bold text-zinc-800">
+                    {act.type === 'PAGE_VIEW' && '🌐 Шинэ зочин вебсайтад хандлаа'}
+                    {act.type === 'QUIZ_START' && `📝 ${act.childName || 'Хүүхэд'}-ийн сорилыг эхлүүллээ`}
+                    {act.type === 'QUIZ_COMPLETE' && `🎯 ${act.childName || 'Хүүхэд'}-ийн оношилгоо дууслаа: «${act.archetypeTitle}»`}
+                    {act.type === 'PAYMENT_INIT' && `💳 ${act.childName || 'Хүүхэд'}-ийн 14,900₮ QPay нэхэмжлэх үүслээ`}
+                    {act.type === 'PAYMENT_SUCCESS' && `💰 ${act.childName || 'Хүүхэд'}-ийн хөтөч ном 14,900₮-өөр амжилттай худалдан авагдлаа!`}
+                  </span>
+                </div>
+                <span className="text-[11px] text-zinc-400 font-mono">
+                  {new Date(act.timestamp).toLocaleTimeString('mn-MN')}
                 </span>
               </div>
-              <span className="text-[11px] text-zinc-400 font-mono">
-                {new Date(act.timestamp).toLocaleTimeString('mn-MN')}
-              </span>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

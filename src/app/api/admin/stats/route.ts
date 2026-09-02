@@ -6,17 +6,17 @@ export async function GET(req: NextRequest) {
     const data = getAnalyticsData();
     const events = data.events || [];
 
-    // Filter by type
-    const pageViews = data.totalVisitors;
+    // Filter by real types
+    const pageViews = data.totalVisitors || 0;
     const quizStarts = events.filter((e) => e.type === 'QUIZ_START').length;
     const quizCompletions = events.filter((e) => e.type === 'QUIZ_COMPLETE').length;
     const payments = events.filter((e) => e.type === 'PAYMENT_SUCCESS');
     const paymentInits = events.filter((e) => e.type === 'PAYMENT_INIT').length;
 
-    // Total Revenue
+    // Total Real Revenue
     const totalRevenue = payments.reduce((acc, curr) => acc + (curr.amount || 14900), 0);
 
-    // Archetype Distribution
+    // Real Archetype Distribution
     const archetypeCounts: Record<string, { title: string; count: number }> = {
       gentle_observer: { title: 'Зөөлөн Мэдрэмжтэй Ажиглагч', count: 0 },
       energetic_pioneer: { title: 'Эрч хүчтэй Манлайлагч', count: 0 },
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
       calm_harmonizer: { title: 'Тогтуун Зохицогч', count: 0 },
     };
 
-    // Age Distribution
+    // Real Age Distribution
     const ageCounts: Record<string, number> = {
       toddler: 0,
       preschool: 0,
@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
       }
     });
 
-    // Conversion rate
+    // Real conversion rates
     const quizCompletionRate = pageViews > 0 ? ((quizCompletions / pageViews) * 100).toFixed(1) : '0.0';
     const paymentConversionRate = quizCompletions > 0 ? ((payments.length / quizCompletions) * 100).toFixed(1) : '0.0';
 
@@ -57,11 +57,11 @@ export async function GET(req: NextRequest) {
         paymentConversionRate,
       },
       funnel: [
-        { step: 'Зочилсон (Visitors)', count: pageViews, percentage: 100 },
-        { step: 'Сорил эхлүүлсэн (Started)', count: Math.max(quizStarts, quizCompletions + 8), percentage: Math.round((Math.max(quizStarts, quizCompletions + 8) / (pageViews || 1)) * 100) },
-        { step: 'Оношилгоо дуусгасан (Completed)', count: quizCompletions, percentage: Math.round((quizCompletions / (pageViews || 1)) * 100) },
-        { step: 'Төлбөрийн цонх нээсэн (Checkout)', count: Math.max(paymentInits, payments.length + 3), percentage: Math.round((Math.max(paymentInits, payments.length + 3) / (pageViews || 1)) * 100) },
-        { step: 'Хөтөч худалдан авсан (Paid)', count: payments.length, percentage: Math.round((payments.length / (pageViews || 1)) * 100) },
+        { step: 'Зочилсон (Visitors)', count: pageViews, percentage: pageViews > 0 ? 100 : 0 },
+        { step: 'Сорил эхлүүлсэн (Started)', count: quizStarts, percentage: pageViews > 0 ? Math.round((quizStarts / pageViews) * 100) : 0 },
+        { step: 'Оношилгоо дуусгасан (Completed)', count: quizCompletions, percentage: pageViews > 0 ? Math.round((quizCompletions / pageViews) * 100) : 0 },
+        { step: 'Төлбөрийн цонх нээсэн (Checkout)', count: paymentInits, percentage: pageViews > 0 ? Math.round((paymentInits / pageViews) * 100) : 0 },
+        { step: 'Хөтөч худалдан авсан (Paid)', count: payments.length, percentage: pageViews > 0 ? Math.round((payments.length / pageViews) * 100) : 0 },
       ],
       archetypeDistribution: Object.entries(archetypeCounts).map(([id, val]) => ({
         id,
@@ -69,8 +69,8 @@ export async function GET(req: NextRequest) {
         count: val.count,
       })),
       ageDistribution: ageCounts,
-      recentPayments: payments.slice(0, 15),
-      recentActivity: events.slice(0, 25),
+      recentPayments: payments.slice(0, 30),
+      recentActivity: events.slice(0, 30),
       lastUpdated: new Date().toISOString(),
     });
   } catch (error: any) {
