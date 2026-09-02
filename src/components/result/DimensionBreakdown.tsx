@@ -15,7 +15,7 @@ export const DimensionBreakdown: React.FC<DimensionBreakdownProps> = ({ scores }
 
   return (
     <div className="w-full bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/90 shadow-card">
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <h3 className="text-base sm:text-lg font-black text-zinc-900">4 Тэнхлэгийн матриц</h3>
           <p className="text-xs text-zinc-500">Сэтгэл зүйн үндсэн тэнхлэгүүдийн үнэлгээ</p>
@@ -26,26 +26,26 @@ export const DimensionBreakdown: React.FC<DimensionBreakdownProps> = ({ scores }
           <button
             type="button"
             onClick={() => setViewMode('radar')}
-            className={`p-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
               viewMode === 'radar'
                 ? 'bg-white text-indigo-700 shadow-sm'
                 : 'text-zinc-500 hover:text-zinc-900'
             }`}
           >
             <Radar className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Радар</span>
+            <span>Радар</span>
           </button>
           <button
             type="button"
             onClick={() => setViewMode('bars')}
-            className={`p-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
               viewMode === 'bars'
                 ? 'bg-white text-indigo-700 shadow-sm'
                 : 'text-zinc-500 hover:text-zinc-900'
             }`}
           >
             <BarChart2 className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Жагсаалт</span>
+            <span>Жагсаалт</span>
           </button>
         </div>
       </div>

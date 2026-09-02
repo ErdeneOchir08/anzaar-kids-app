@@ -76,52 +76,61 @@ export default function ResultPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-6 space-y-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       {/* 0. Multi-Child Selector & Switcher Bar */}
       <ChildSelectorBar />
 
-      {/* 1. Header with Archetype & Core Traits */}
-      <ArchetypeHeader
-        archetype={result.primaryArchetype}
-        secondaryArchetype={result.secondaryArchetype}
-        childProfile={result.childProfile}
-      />
+      {/* 2-Column Responsive Desktop Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+        {/* Left Column (5 of 12 cols on Desktop) - Sticky Primary Overview */}
+        <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-20">
+          {/* 1. Header with Archetype & Core Traits */}
+          <ArchetypeHeader
+            archetype={result.primaryArchetype}
+            secondaryArchetype={result.secondaryArchetype}
+            childProfile={result.childProfile}
+          />
 
-      {/* 2. Age-Specific Guidance Breakdown */}
-      <AgeSpecificCard
-        archetype={result.primaryArchetype}
-        childProfile={result.childProfile}
-      />
+          {/* 6. Viral Instagram Story Share Card */}
+          <ShareStoryCard
+            archetype={result.primaryArchetype}
+            childProfile={result.childProfile}
+          />
+        </div>
 
-      {/* 3. 4 Dimension Radar & Bar Breakdown */}
-      <DimensionBreakdown scores={result.dimensionScores} />
+        {/* Right Column (7 of 12 cols on Desktop) - Deep-Dive & Action Plan */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* 3. 4 Dimension Radar & Bar Breakdown */}
+          <DimensionBreakdown scores={result.dimensionScores} />
 
-      {/* 4. Superpowers & Sensory Growth Areas */}
-      <SuperpowersAndGrowth
-        archetype={result.primaryArchetype}
-        childProfile={result.childProfile}
-      />
+          {/* 2. Age-Specific Guidance Breakdown */}
+          <AgeSpecificCard
+            archetype={result.primaryArchetype}
+            childProfile={result.childProfile}
+          />
 
-      {/* 5. Direct PDF Unlock & Playbook Download Offer */}
-      <PaywallOffer
-        archetype={result.primaryArchetype}
-        childProfile={result.childProfile}
-        isUnlocked={isUnlocked}
-        onOpenPayment={() => setIsPaymentOpen(true)}
-      />
+          {/* 4. Superpowers & Sensory Growth Areas */}
+          <SuperpowersAndGrowth
+            archetype={result.primaryArchetype}
+            childProfile={result.childProfile}
+          />
 
-      {/* 6. Viral Instagram Story Share Card */}
-      <ShareStoryCard
-        archetype={result.primaryArchetype}
-        childProfile={result.childProfile}
-      />
+          {/* 5. Direct PDF Unlock & Playbook Download Offer */}
+          <PaywallOffer
+            archetype={result.primaryArchetype}
+            childProfile={result.childProfile}
+            isUnlocked={isUnlocked}
+            onOpenPayment={() => setIsPaymentOpen(true)}
+          />
+        </div>
+      </div>
 
       {/* Bottom Actions: Copy Link & New Child */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 pb-8 border-t border-zinc-200">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-6 pb-8 border-t border-zinc-200/90">
         <button
           type="button"
           onClick={handleCopyLink}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-600 hover:text-zinc-900 bg-white px-4 py-2.5 rounded-2xl border border-zinc-200 shadow-sm transition-all"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-600 hover:text-zinc-900 bg-white px-5 py-3 rounded-2xl border border-zinc-200 shadow-sm transition-all hover:bg-zinc-50"
         >
           {isCopied ? (
             <>
@@ -139,7 +148,7 @@ export default function ResultPage() {
         <button
           type="button"
           onClick={handleStartNewChild}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 py-2.5 px-4 rounded-2xl transition-all"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 py-3 px-5 rounded-2xl transition-all"
         >
           <PlusCircle className="w-3.5 h-3.5" />
           <span>Өөр хүүхдэд шинэ сорил эхлэх</span>

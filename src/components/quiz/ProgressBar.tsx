@@ -18,8 +18,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ current, total }) => {
   };
 
   return (
-    <div className="w-full bg-white/90 backdrop-blur-xl border-b border-zinc-200/80 sticky top-15 z-30 py-3 px-4 shadow-sm">
-      <div className="max-w-xl mx-auto">
+    <div className="w-full bg-white/90 backdrop-blur-xl border-b border-zinc-200/80 sticky top-14 sm:top-16 z-30 py-3 px-4 shadow-sm">
+      <div className="max-w-3xl mx-auto">
         <div className="flex items-center justify-between text-xs font-bold text-zinc-700 mb-2">
           <span className="bg-zinc-100 px-2.5 py-0.5 rounded-md text-[11px] font-black text-zinc-800">
             {current + 1} / {total}
