@@ -95,28 +95,28 @@ export const PaywallOffer: React.FC<PaywallOfferProps> = ({
           <div className="flex items-start gap-2.5 text-xs text-zinc-200 leading-relaxed">
             <MessageSquare className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
             <span>
-              <strong>Хямралын үеийн ярианы скриптүүд:</strong> Зөрүүдлэх, уйлах үед яг юу гэж хэлэх 3 алхамт дүрэм.
+              <strong>Уурлаж зөрүүдэлсэн үед хэлэх үгс:</strong> Хүүхдээ тайвшруулах бодит 3 алхамт бэлэн хариултууд.
             </span>
           </div>
 
           <div className="flex items-start gap-2.5 text-xs text-zinc-200 leading-relaxed">
             <BookOpen className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
             <span>
-              <strong>Дэлгэц & Тоглоом хураах протокол:</strong> Шилжилтийн үеийг хэрүүл маргаангүй зохицуулах арга.
+              <strong>Дэлгэц, тоглоом хураах зөв дадал:</strong> Утас хаах үеийн хэрүүл маргааныг эцэслэх 2 минутын дүрэм.
             </span>
           </div>
 
           <div className="flex items-start gap-2.5 text-xs text-zinc-200 leading-relaxed">
             <Moon className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
             <span>
-              <strong>Орой тайван унтуулах хөтөлбөр:</strong> Мэдрэлийн ядаргааг тайлж, сэтгэлийг дулаацуулах зан үйл.
+              <strong>Орой тайван унтуулах дэглэм:</strong> Мэдрэлийг нь амрааж, сэтгэлийг дулаацуулах оройн тайван дадал.
             </span>
           </div>
 
           <div className="flex items-start gap-2.5 text-xs text-zinc-200 leading-relaxed">
             <Download className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5" />
             <span>
-              <strong>Төхөөрөмждөө шууд PDF татах:</strong> Утас, таблет, компьютертоо файл хэлбэрээр хадгалах боломж.
+              <strong>Утас, компьютертоо PDF-ээр хадгалах:</strong> 12+ хуудас бүрэн номыг төхөөрөмж дээрээ шууд татах боломж.
             </span>
           </div>
         </div>

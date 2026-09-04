@@ -78,7 +78,7 @@ export const ArchetypeHeader: React.FC<ArchetypeHeaderProps> = ({
       {/* Secondary Archetype */}
       {secondaryArchetype && (
         <div className="mt-5 pt-4 border-t border-zinc-100 flex items-center gap-2 text-xs text-zinc-600">
-          <span className="font-bold text-zinc-800">Дэд нөлөөлөгч онцлог:</span>
+          <span className="font-bold text-zinc-800">Дагалдах хэв шинж:</span>
           <span
             className="font-bold px-2.5 py-0.5 rounded-lg border text-[11px]"
             style={{

@@ -76,51 +76,33 @@ export default function ResultPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       {/* 0. Multi-Child Selector & Switcher Bar */}
       <ChildSelectorBar />
 
-      {/* 2-Column Responsive Desktop Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-        {/* Left Column (5 of 12 cols on Desktop) - Sticky Primary Overview */}
-        <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-20">
-          {/* 1. Header with Archetype & Core Traits */}
-          <ArchetypeHeader
-            archetype={result.primaryArchetype}
-            secondaryArchetype={result.secondaryArchetype}
-            childProfile={result.childProfile}
-          />
+      {/* 1. Header with Archetype & Core Traits (Full-Width Hero Section) */}
+      <ArchetypeHeader
+        archetype={result.primaryArchetype}
+        secondaryArchetype={result.secondaryArchetype}
+        childProfile={result.childProfile}
+      />
 
-          {/* 6. Viral Instagram Story Share Card */}
-          <ShareStoryCard
-            archetype={result.primaryArchetype}
-            childProfile={result.childProfile}
-          />
-        </div>
-
-        {/* Right Column (7 of 12 cols on Desktop) - Deep-Dive & Action Plan */}
-        <div className="lg:col-span-7 space-y-6">
-          {/* 3. 4 Dimension Radar & Bar Breakdown */}
+      {/* 2. Balanced 2-Column Desktop Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+        {/* Left Column: Dimensions & Age-Specific Guidance */}
+        <div className="space-y-6">
           <DimensionBreakdown scores={result.dimensionScores} />
-
-          {/* 2. Age-Specific Guidance Breakdown */}
           <AgeSpecificCard
             archetype={result.primaryArchetype}
             childProfile={result.childProfile}
             isUnlocked={isUnlocked}
             onOpenPayment={() => setIsPaymentOpen(true)}
           />
+        </div>
 
-          {/* 4. Superpowers & Sensory Growth Areas */}
+        {/* Right Column: Strengths & Growth Areas (with locked teaser cards) */}
+        <div className="space-y-6">
           <SuperpowersAndGrowth
-            archetype={result.primaryArchetype}
-            childProfile={result.childProfile}
-            isUnlocked={isUnlocked}
-            onOpenPayment={() => setIsPaymentOpen(true)}
-          />
-
-          {/* 5. Direct PDF Unlock & Playbook Download Offer */}
-          <PaywallOffer
             archetype={result.primaryArchetype}
             childProfile={result.childProfile}
             isUnlocked={isUnlocked}
@@ -129,7 +111,21 @@ export default function ResultPage() {
         </div>
       </div>
 
-      {/* Bottom Actions: Copy Link & New Child */}
+      {/* 3. Direct PDF Unlock & Playbook Download Offer (Full Width Premium Banner) */}
+      <PaywallOffer
+        archetype={result.primaryArchetype}
+        childProfile={result.childProfile}
+        isUnlocked={isUnlocked}
+        onOpenPayment={() => setIsPaymentOpen(true)}
+      />
+
+      {/* 4. Viral Instagram Story Share Card (Full Width / 2-Col on Desktop) */}
+      <ShareStoryCard
+        archetype={result.primaryArchetype}
+        childProfile={result.childProfile}
+      />
+
+      {/* 5. Bottom Actions: Copy Link & New Child */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-6 pb-8 border-t border-zinc-200/90">
         <button
           type="button"
