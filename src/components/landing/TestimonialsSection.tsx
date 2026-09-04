@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Star, CheckCircle2 } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 export const TestimonialsSection: React.FC = () => {
   const reviews = [
@@ -26,29 +26,31 @@ export const TestimonialsSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-8 px-4 max-w-xl mx-auto">
-      <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-stone-900">Эцэг эхчүүдийн бодит сэтгэгдэл</h2>
-        <p className="text-xs text-stone-500 mt-1">Олон зуун гэр бүлийн харилцаанд эерэг өөрчлөлт авчирсан туршлага</p>
+    <section className="py-12 px-4 sm:px-6 max-w-5xl mx-auto">
+      <div className="text-center mb-8">
+        <h2 className="text-xl sm:text-2xl font-black text-zinc-900">Эцэг эхчүүдийн бодит сэтгэгдэл</h2>
+        <p className="text-xs sm:text-sm text-zinc-500 mt-1">Олон зуун гэр бүлийн харилцаанд эерэг өөрчлөлт авчирсан туршлага</p>
       </div>
 
-      <div className="space-y-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {reviews.map((r, i) => (
-          <div key={i} className="bg-white p-4 rounded-2xl border border-stone-200/80 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
+          <div key={i} className="bg-white p-5 rounded-3xl border border-zinc-200/80 shadow-card flex flex-col justify-between">
+            <div className="space-y-3">
               <div className="flex items-center gap-1">
                 {[...Array(r.stars)].map((_, s) => (
                   <Star key={s} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                 ))}
               </div>
-              <span className="text-[10.5px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
+              <p className="text-xs sm:text-sm text-zinc-700 leading-relaxed italic">
+                {r.comment}
+              </p>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-zinc-100">
+              <p className="text-xs font-black text-zinc-900">{r.name}</p>
+              <span className="text-[10.5px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full inline-block mt-1">
                 {r.archetype}
               </span>
-            </div>
-            <p className="text-xs text-stone-700 leading-relaxed">{r.comment}</p>
-            <div className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-stone-800">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{r.name}</span>
             </div>
           </div>
         ))}

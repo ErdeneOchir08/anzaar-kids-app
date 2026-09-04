@@ -17,7 +17,7 @@ export const ArchetypeHeader: React.FC<ArchetypeHeaderProps> = ({
   childProfile,
 }) => {
   return (
-    <div className="w-full bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/90 shadow-card relative overflow-hidden">
+    <div className="w-full bg-white rounded-3xl p-5 sm:p-8 border border-zinc-200/90 shadow-card relative overflow-hidden">
       {/* Background Soft Glow */}
       <div
         className="absolute top-0 right-0 w-72 h-72 rounded-full blur-3xl opacity-20 pointer-events-none"

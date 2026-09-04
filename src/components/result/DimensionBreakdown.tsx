@@ -14,7 +14,7 @@ export const DimensionBreakdown: React.FC<DimensionBreakdownProps> = ({ scores }
   const [viewMode, setViewMode] = useState<'radar' | 'bars'>('radar');
 
   return (
-    <div className="w-full bg-white rounded-3xl p-6 sm:p-8 border border-zinc-200/90 shadow-card">
+    <div className="w-full bg-white rounded-3xl p-4 sm:p-8 border border-zinc-200/90 shadow-card">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <div>
           <h3 className="text-base sm:text-lg font-black text-zinc-900">4 Тэнхлэгийн матриц</h3>

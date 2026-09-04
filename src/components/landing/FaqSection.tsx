@@ -13,18 +13,21 @@ export const FaqSection: React.FC = () => {
     },
     {
       q: 'Сорил үнэгүй юу?',
-      a: 'Тийм ээ! 20 асуулт бүхий үндсэн оношилгоо, хүүхдийн зан төлөвийн хэв шинж (Archetype), 4 хэмжээсийн үнэлгээ, давуу тал болон анхаарах зүйлсийг үнэ төлбөргүй харах боломжтой. Хэрэв та 12+ хуудас бүхий нарийвчилсан гарын авлага, хямралын үеийн ярианы скрипт бүхий бүрэн номыг авахыг хүсвэл QPay-ээр худалдан авах боломжтой.',
+      a: 'Тийм ээ! 20 асуулт бүхий үндсэн оношилгоо, хүүхдийн зан төлөвийн хэв шинж (Archetype), 4 хэмжээсийн үнэлгээ, давуу тал болон суурь зөвлөмжийг үнэ төлбөргүй харах боломжтой. Хэрэв та 12+ хуудас бүхий нарийвчилсан гарын авлага, хямралын үеийн ярианы скрипт бүхий бүрэн номыг авахыг хүсвэл 9,900₮-өөр QPay-ээр шууд худалдан авах боломжтой.',
     },
     {
       q: 'Нэгээс олон хүүхэдтэй бол дахиж өгч болох уу?',
-      a: 'Тийм ээ, та хүүхэд бүртээ тусад нь сорил өгч, тус бүрийнх нь ялгаатай онцлог, хэрэгцээг олж мэдэх боломжтой.',
+      a: 'Тийм ээ, та хүүхэд бүртээ тусад нь сорил өгч, бүх хүүхдийнхээ оношилгоог нэг дор хадгалан хооронд нь хялбархан шилжин харах боломжтой.',
     },
   ];
 
   return (
-    <section id="faq" className="py-8 px-4 max-w-xl mx-auto mb-10">
-      <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-stone-900">Түгээмэл асуулт, хариулт</h2>
+    <section id="faq" className="py-12 px-4 sm:px-6 max-w-3xl mx-auto mb-12">
+      <div className="text-center mb-8">
+        <span className="text-[11px] font-extrabold uppercase tracking-wider text-zinc-500 bg-zinc-100 px-3 py-1 rounded-full">
+          Асуулт, хариулт
+        </span>
+        <h2 className="text-xl sm:text-2xl font-black text-zinc-900 mt-2">Түгээмэл асуултууд</h2>
       </div>
 
       <div className="space-y-3">
@@ -33,22 +36,22 @@ export const FaqSection: React.FC = () => {
           return (
             <div
               key={i}
-              className="bg-white rounded-2xl border border-stone-200/80 overflow-hidden transition-all"
+              className="bg-white rounded-2xl border border-zinc-200/80 overflow-hidden transition-all shadow-sm"
             >
               <button
                 type="button"
                 onClick={() => setOpenIdx(isOpen ? null : i)}
-                className="w-full p-4 text-left flex items-center justify-between gap-2 font-semibold text-stone-900 text-sm"
+                className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 font-bold text-zinc-900 text-xs sm:text-sm"
               >
                 <span>{faq.q}</span>
                 <ChevronDown
-                  className={`w-4 h-4 text-stone-400 transition-transform duration-200 ${
-                    isOpen ? 'rotate-180 text-emerald-600' : ''
+                  className={`w-4 h-4 text-zinc-400 transition-transform duration-200 flex-shrink-0 ${
+                    isOpen ? 'rotate-180 text-indigo-600' : ''
                   }`}
                 />
               </button>
               {isOpen && (
-                <div className="px-4 pb-4 text-xs text-stone-600 leading-relaxed border-t border-stone-100 pt-3">
+                <div className="px-4 sm:px-5 pb-5 text-xs sm:text-sm text-zinc-600 leading-relaxed border-t border-zinc-100 pt-3">
                   {faq.a}
                 </div>
               )}

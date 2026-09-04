@@ -9,9 +9,12 @@ interface RadarChartProps {
   size?: number;
 }
 
-export const RadarChart: React.FC<RadarChartProps> = ({ scores, size = 280 }) => {
-  const center = size / 2;
-  const radius = (size / 2) - 45;
+export const RadarChart: React.FC<RadarChartProps> = ({ scores }) => {
+  const width = 340;
+  const height = 290;
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const radius = 80;
 
   const dims: { id: DimensionId; angle: number; label: string; color: string }[] = [
     { id: 'sensitivity', angle: -90, label: 'Мэдрэг байдал', color: DIMENSIONS.sensitivity.color },
@@ -23,8 +26,8 @@ export const RadarChart: React.FC<RadarChartProps> = ({ scores, size = 280 }) =>
   const getCoordinates = (angleDeg: number, distance: number) => {
     const angleRad = (angleDeg * Math.PI) / 180;
     return {
-      x: center + distance * Math.cos(angleRad),
-      y: center + distance * Math.sin(angleRad),
+      x: centerX + distance * Math.cos(angleRad),
+      y: centerY + distance * Math.sin(angleRad),
     };
   };
 
@@ -40,10 +43,10 @@ export const RadarChart: React.FC<RadarChartProps> = ({ scores, size = 280 }) =>
   const rings = [0.25, 0.5, 0.75, 1];
 
   return (
-    <div className="relative w-full flex flex-col items-center justify-center p-2">
+    <div className="relative w-full flex flex-col items-center justify-center p-1 sm:p-2 overflow-hidden">
       <svg
-        viewBox={`0 0 ${size} ${size}`}
-        className="w-full max-w-[280px] h-auto overflow-visible select-none"
+        viewBox={`0 0 ${width} ${height}`}
+        className="w-full max-w-[320px] sm:max-w-[340px] h-auto select-none"
       >
         {/* Background webs */}
         {rings.map((ring, idx) => {
@@ -71,8 +74,8 @@ export const RadarChart: React.FC<RadarChartProps> = ({ scores, size = 280 }) =>
           return (
             <line
               key={d.id}
-              x1={center}
-              y1={center}
+              x1={centerX}
+              y1={centerY}
               x2={x}
               y2={y}
               stroke="#cbd5e1"
@@ -97,23 +100,44 @@ export const RadarChart: React.FC<RadarChartProps> = ({ scores, size = 280 }) =>
           const { x, y } = getCoordinates(d.angle, dist);
           return (
             <g key={d.id} className="transition-all duration-700 ease-out">
-              <circle cx={x} cy={y} r="5.5" fill="#4f46e5" stroke="#ffffff" strokeWidth="2.5" />
+              <circle cx={x} cy={y} r="5" fill="#4f46e5" stroke="#ffffff" strokeWidth="2.5" />
             </g>
           );
         })}
 
-        {/* Labels */}
+        {/* Labels with safe viewport padding */}
         {dims.map((d) => {
-          const { x, y } = getCoordinates(d.angle, radius + 22);
           const percentage = scores[d.id]?.percentage || 50;
+          let offsetDistance = radius + 22;
+          let textAnchor: 'middle' | 'start' | 'end' = 'middle';
+          let customY = 0;
+
+          if (d.angle === 0) {
+            // Right label
+            textAnchor = 'start';
+            offsetDistance = radius + 14;
+          } else if (d.angle === 180) {
+            // Left label
+            textAnchor = 'end';
+            offsetDistance = radius + 14;
+          } else if (d.angle === -90) {
+            // Top label
+            customY = -4;
+          } else if (d.angle === 90) {
+            // Bottom label
+            customY = 6;
+          }
+
+          const { x, y } = getCoordinates(d.angle, offsetDistance);
+
           return (
             <text
               key={d.id}
               x={x}
-              y={y}
-              textAnchor="middle"
+              y={y + customY}
+              textAnchor={textAnchor}
               dominantBaseline="central"
-              className="text-[10.5px] font-extrabold fill-zinc-800"
+              className="text-[10px] sm:text-[11px] font-extrabold fill-zinc-800 tracking-tight"
             >
               {d.label} ({percentage}%)
             </text>

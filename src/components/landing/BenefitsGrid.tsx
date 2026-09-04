@@ -36,24 +36,24 @@ export const BenefitsGrid: React.FC = () => {
   ];
 
   return (
-    <section id="benefits" className="py-10 px-4 max-w-xl mx-auto">
-      <div className="text-center mb-7">
+    <section id="benefits" className="py-10 px-4 sm:px-6 max-w-5xl mx-auto">
+      <div className="text-center mb-8">
         <span className="text-[11px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60">
           Бодит үнэ цэн
         </span>
-        <h2 className="text-2xl font-black text-zinc-900 mt-2">
+        <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 mt-2">
           Энэхүү сорилоос та юу олж мэдэх вэ?
         </h2>
-        <p className="text-xs text-zinc-500 mt-1">
+        <p className="text-xs sm:text-sm text-zinc-500 mt-1 max-w-lg mx-auto">
           Зөвхөн ерөнхий онол биш, таны хүүхдийн өдөр тутмын амьдралд хэрэгжих бодит заавар
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {benefits.map((b, i) => (
           <div
             key={i}
-            className="bg-white p-5 rounded-3xl border border-zinc-200/80 shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between"
+            className="bg-white p-5 sm:p-6 rounded-3xl border border-zinc-200/80 shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between mb-3">
@@ -64,8 +64,8 @@ export const BenefitsGrid: React.FC = () => {
                   {b.tag}
                 </span>
               </div>
-              <h3 className="text-sm font-black text-zinc-900 leading-snug">{b.title}</h3>
-              <p className="text-xs text-zinc-600 mt-1.5 leading-relaxed">{b.desc}</p>
+              <h3 className="text-sm sm:text-base font-black text-zinc-900 leading-snug">{b.title}</h3>
+              <p className="text-xs text-zinc-600 mt-2 leading-relaxed">{b.desc}</p>
             </div>
           </div>
         ))}
