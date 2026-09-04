@@ -72,6 +72,7 @@ export default function GuidePage() {
         archetype={result.primaryArchetype}
         childProfile={result.childProfile}
         scores={result.dimensionScores}
+        invoiceId={result.invoiceId}
       />
     </div>
   );

@@ -13,7 +13,7 @@ interface QuizContextType {
   savedAssessments: AssessmentResult[];
   calculateAndSetResult: () => AssessmentResult;
   isUnlocked: boolean;
-  unlockPremium: () => void;
+  unlockPremium: (invoiceId?: string) => void;
   startNewQuiz: () => void;
   loadChildAssessment: (id: string) => void;
   deleteAssessment: (id: string) => void;
@@ -115,12 +115,16 @@ export function QuizProvider({ children }: { children: React.ReactNode }) {
     return res;
   };
 
-  const unlockPremium = () => {
+  const unlockPremium = (invoiceId?: string) => {
     if (!activeResultId) return;
 
     const updatedList = savedAssessments.map((item) => {
       if (item.id === activeResultId) {
-        return { ...item, isUnlocked: true };
+        return { 
+          ...item, 
+          isUnlocked: true,
+          invoiceId: invoiceId || item.invoiceId,
+        };
       }
       return item;
     });

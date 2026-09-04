@@ -12,12 +12,14 @@ import { AgeSpecificCard } from '../../components/result/AgeSpecificCard';
 import { ShareStoryCard } from '../../components/result/ShareStoryCard';
 import { PaywallOffer } from '../../components/result/PaywallOffer';
 import { QPayModal } from '../../components/payment/QPayModal';
-import { PlusCircle, ArrowRight, Sparkles, Copy, Check, Lock, Download } from 'lucide-react';
+import { SendEmailModal } from '../../components/email/SendEmailModal';
+import { PlusCircle, ArrowRight, Sparkles, Copy, Check, Lock, Download, Mail } from 'lucide-react';
 
 export default function ResultPage() {
   const router = useRouter();
   const { result, isUnlocked, startNewQuiz } = useQuiz();
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
@@ -117,6 +119,7 @@ export default function ResultPage() {
         childProfile={result.childProfile}
         isUnlocked={isUnlocked}
         onOpenPayment={() => setIsPaymentOpen(true)}
+        onOpenEmail={() => setIsEmailModalOpen(true)}
       />
 
       {/* 4. Viral Instagram Story Share Card */}
@@ -181,13 +184,22 @@ export default function ResultPage() {
           </div>
         </div>
       ) : (
-        <div className="fixed bottom-3 inset-x-3 z-40 lg:hidden animate-in fade-in slide-in-from-bottom-3 duration-300">
+        <div className="fixed bottom-3 inset-x-3 z-40 lg:hidden animate-in fade-in slide-in-from-bottom-3 duration-300 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsEmailModalOpen(true)}
+            className="flex-1 bg-gradient-to-r from-indigo-600 via-anzaar-600 to-rose-600 text-white p-3.5 rounded-2xl shadow-2xl border border-indigo-400/40 flex items-center justify-center gap-2 text-xs font-black active:scale-95"
+          >
+            <Mail className="w-4 h-4" />
+            <span className="truncate">И-мэйлээр Ном & Зураг авах</span>
+          </button>
+          
           <Link
             href="/guide"
-            className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white p-3.5 rounded-2xl shadow-2xl border border-emerald-500/50 flex items-center justify-center gap-2 text-xs font-black active:scale-95"
+            title="Онлайнаар унших"
+            className="flex-shrink-0 bg-zinc-900/90 backdrop-blur-md text-white p-3.5 rounded-2xl shadow-xl border border-zinc-700 flex items-center justify-center"
           >
-            <Download className="w-4 h-4" />
-            <span>{result.childProfile.name}-ийн 12+ хуудас PDF номыг татах</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       )}
@@ -197,6 +209,15 @@ export default function ResultPage() {
         isOpen={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
         onSuccess={handlePaymentSuccess}
+      />
+
+      {/* Send Email Modal */}
+      <SendEmailModal
+        isOpen={isEmailModalOpen}
+        onClose={() => setIsEmailModalOpen(false)}
+        archetype={result.primaryArchetype}
+        childProfile={result.childProfile}
+        invoiceId={result.invoiceId}
       />
     </div>
   );

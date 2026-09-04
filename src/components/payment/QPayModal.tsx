@@ -109,7 +109,7 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
   const handlePaymentSuccessTrigger = () => {
     setIsProcessing(false);
     setIsCompleted(true);
-    unlockPremium();
+    unlockPremium(invoiceId);
 
     trackEvent('PAYMENT_SUCCESS', {
       childName: childProfile.name,

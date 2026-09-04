@@ -24,20 +24,25 @@ import {
   Compass,
   Tv,
   Users2,
-  GraduationCap
+  GraduationCap,
+  Mail
 } from 'lucide-react';
+import { SendEmailModal } from '../email/SendEmailModal';
 
 interface FullPlaybookViewProps {
   archetype: Archetype;
   childProfile: ChildProfile;
   scores: Record<DimensionId, DimensionScore>;
+  invoiceId?: string;
 }
 
 export const FullPlaybookView: React.FC<FullPlaybookViewProps> = ({
   archetype,
   childProfile,
   scores,
+  invoiceId,
 }) => {
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState<string>('');
   const [downloadSuccess, setDownloadSuccess] = useState(false);
@@ -84,12 +89,22 @@ export const FullPlaybookView: React.FC<FullPlaybookViewProps> = ({
         </Link>
 
         <div className="flex items-center gap-2">
+          {/* Send Email Button */}
+          <button
+            type="button"
+            onClick={() => setIsEmailModalOpen(true)}
+            className="inline-flex items-center gap-2 text-xs font-black text-white bg-gradient-to-r from-indigo-600 via-anzaar-600 to-rose-600 hover:shadow-indigo-600/30 px-4 py-2.5 rounded-2xl shadow-md transition-all active:scale-95"
+          >
+            <Mail className="w-4 h-4" />
+            <span>И-мэйлээр авах</span>
+          </button>
+
           {/* Direct PDF Download Button */}
           <button
             type="button"
             disabled={isDownloading}
             onClick={handleDownloadPdf}
-            className="inline-flex items-center gap-2 text-xs font-black text-white bg-gradient-to-r from-indigo-600 via-anzaar-600 to-indigo-700 hover:shadow-indigo-600/30 px-5 py-2.5 rounded-2xl shadow-md transition-all active:scale-95 disabled:opacity-75"
+            className="inline-flex items-center gap-2 text-xs font-bold text-zinc-700 bg-zinc-100 hover:bg-zinc-200 px-4 py-2.5 rounded-2xl transition-all active:scale-95 disabled:opacity-75"
           >
             {isDownloading ? (
               <>
@@ -379,18 +394,49 @@ export const FullPlaybookView: React.FC<FullPlaybookViewProps> = ({
         </section>
       </div>
 
-      {/* Bottom Download CTA */}
-      <div className="text-center pt-4 print:hidden">
-        <button
-          type="button"
-          disabled={isDownloading}
-          onClick={handleDownloadPdf}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 via-anzaar-600 to-indigo-700 text-white font-black text-xs sm:text-sm py-4 px-10 rounded-2xl shadow-xl shadow-indigo-600/25 transition-all active:scale-95"
-        >
-          <Download className="w-4 h-4" />
-          <span>Энэхүү гарын авлагыг төхөөрөмждөө PDF-ээр хадгалах</span>
-        </button>
+      {/* Bottom Delivery Actions (Email & PDF) */}
+      <div className="bg-gradient-to-br from-indigo-950 via-zinc-900 to-black p-6 sm:p-8 rounded-[32px] text-white text-center space-y-4 shadow-2xl print:hidden border border-indigo-500/30">
+        <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 flex items-center justify-center mx-auto">
+          <Mail className="w-6 h-6" />
+        </div>
+        <div className="space-y-1">
+          <h3 className="text-lg sm:text-xl font-black">
+            Энэхүү ном & Story зургийг и-мэйлээрээ үүрд хадгалах уу?
+          </h3>
+          <p className="text-xs text-zinc-300 max-w-md mx-auto">
+            Утсан дээрээ хайж төөрөхгүйн тулд и-мэйл хаяг руугаа шууд илгээн үүрд найдвартай хадгалаарай.
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <button
+            type="button"
+            onClick={() => setIsEmailModalOpen(true)}
+            className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 via-anzaar-500 to-rose-500 text-white font-black text-xs sm:text-sm py-4 px-8 rounded-2xl shadow-xl shadow-indigo-600/25 transition-all active:scale-95 flex items-center justify-center gap-2"
+          >
+            <Mail className="w-4 h-4" />
+            <span>И-мэйлээр ном & зураг авах</span>
+          </button>
+          
+          <button
+            type="button"
+            disabled={isDownloading}
+            onClick={handleDownloadPdf}
+            className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-black text-xs sm:text-sm py-4 px-8 rounded-2xl border border-white/20 transition-all active:scale-95 flex items-center justify-center gap-2 disabled:opacity-75"
+          >
+            <Download className="w-4 h-4" />
+            <span>Төхөөрөмждөө PDF татах</span>
+          </button>
+        </div>
       </div>
+
+      {/* Send Email Modal */}
+      <SendEmailModal
+        isOpen={isEmailModalOpen}
+        onClose={() => setIsEmailModalOpen(false)}
+        archetype={archetype}
+        childProfile={childProfile}
+        invoiceId={invoiceId}
+      />
     </div>
   );
 };

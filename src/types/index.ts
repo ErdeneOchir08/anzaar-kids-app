@@ -91,6 +91,7 @@ export interface AssessmentResult {
   dimensionScores: Record<DimensionId, DimensionScore>;
   completedAt: string;
   isUnlocked: boolean;
+  invoiceId?: string;
 }
 
 export interface PaymentInvoice {

@@ -12,7 +12,8 @@ import {
   ArrowRight,
   Download,
   ShieldCheck,
-  Check
+  Check,
+  Mail
 } from 'lucide-react';
 
 interface PaywallOfferProps {
@@ -20,6 +21,7 @@ interface PaywallOfferProps {
   childProfile: ChildProfile;
   isUnlocked: boolean;
   onOpenPayment: () => void;
+  onOpenEmail?: () => void;
 }
 
 export const PaywallOffer: React.FC<PaywallOfferProps> = ({
@@ -27,6 +29,7 @@ export const PaywallOffer: React.FC<PaywallOfferProps> = ({
   childProfile,
   isUnlocked,
   onOpenPayment,
+  onOpenEmail,
 }) => {
   if (isUnlocked) {
     return (
@@ -44,17 +47,28 @@ export const PaywallOffer: React.FC<PaywallOfferProps> = ({
             {childProfile.name}-ийн 12+ хуудас бүрэн хөтөч нээгдлээ!
           </h3>
           <p className="text-xs sm:text-sm text-zinc-300 mt-1.5 max-w-md mx-auto leading-relaxed">
-            Та энэхүү гарын авлагыг хүссэн үедээ онлайнаар унших эсвэл PDF файл болгон төхөөрөмждөө шууд татаж авах боломжтой.
+            Та энэхүү гарын авлагыг и-мэйлээрээ үүрд найдвартай хадгалах эсвэл шууд онлайнаар унших боломжтой.
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          {onOpenEmail && (
+            <button
+              type="button"
+              onClick={onOpenEmail}
+              className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 via-anzaar-500 to-rose-500 hover:opacity-95 text-white font-black text-xs sm:text-sm py-4 px-8 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
+            >
+              <Mail className="w-4 h-4" />
+              <span>И-мэйлээр Хөтөч Ном & Зураг авах</span>
+            </button>
+          )}
+
           <Link
             href="/guide"
-            className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-black text-xs sm:text-sm py-4 px-8 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
+            className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-black text-xs sm:text-sm py-4 px-8 rounded-2xl border border-white/20 transition-all flex items-center justify-center gap-2 active:scale-95"
           >
-            <Download className="w-4 h-4" />
-            <span>PDF Файлаар Татах & Унших</span>
+            <BookOpen className="w-4 h-4" />
+            <span>Онлайнаар Унших & PDF</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

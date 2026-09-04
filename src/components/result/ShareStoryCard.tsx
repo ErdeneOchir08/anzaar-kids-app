@@ -89,6 +89,7 @@ export const ShareStoryCard: React.FC<ShareStoryCardProps> = ({
         <div className="md:col-span-7 flex justify-center">
           <div
             ref={cardRef}
+            id="story-passport-capture-card"
             className="w-full max-w-xs sm:max-w-sm rounded-[28px] p-6 text-zinc-900 border border-zinc-200 shadow-xl relative overflow-hidden bg-gradient-to-br from-white via-zinc-50 to-indigo-50/50"
           >
             {/* Decorative Corner Glow */}
