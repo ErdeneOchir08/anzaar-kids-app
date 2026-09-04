@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   try {
     const { childName } = await req.json();
     const invoiceNo = `ANZ_${Date.now()}`;
-    const amount = 14900;
+    const amount = 9900;
     const description = `ANZAAR PRO Playbook: ${childName || 'Child'}`;
 
     if (!process.env.QPAY_USERNAME || !process.env.QPAY_PASSWORD) {

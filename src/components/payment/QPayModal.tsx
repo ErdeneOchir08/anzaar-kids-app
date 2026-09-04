@@ -47,7 +47,7 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
           ageGroup: childProfile.ageGroup,
           archetypeId: result?.primaryArchetype.id,
           archetypeTitle: result?.primaryArchetype.title,
-          amount: 14900,
+          amount: 9900,
         });
 
         const res = await fetch('/api/qpay/create', {
@@ -117,7 +117,7 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
       archetypeId: result?.primaryArchetype.id,
       archetypeTitle: result?.primaryArchetype.title,
       invoiceId,
-      amount: 14900,
+      amount: 9900,
     });
 
     try {
@@ -192,7 +192,7 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
                 <span>QPAY 3.0 ШУУД ТӨЛБӨР</span>
               </div>
               <h3 className="text-xl font-black text-zinc-900">
-                14,900₮ Төлбөр төлөх
+                9,900₮ Төлбөр төлөх
               </h3>
               <p className="text-xs text-zinc-500">
                 Банкны апп-аараа QR кодыг уншуулна уу
@@ -226,7 +226,7 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
                     <div className="w-8 h-8 border-4 border-white rounded" />
                   </div>
                   <div className="text-center text-[10px] font-black uppercase tracking-widest">
-                    QPAY · 14,900₮
+                    QPAY · 9,900₮
                   </div>
                   <div className="flex justify-between">
                     <div className="w-8 h-8 border-4 border-white rounded" />

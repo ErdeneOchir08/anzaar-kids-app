@@ -75,7 +75,7 @@ export const PaywallOffer: React.FC<PaywallOfferProps> = ({
           <span>АНЗААР PRO ХӨТӨЧ · 50% ХЯМДРАЛ</span>
         </span>
         <span className="text-xs text-zinc-500 font-bold line-through">
-          29,900₮
+          19,900₮
         </span>
       </div>
 
@@ -125,7 +125,7 @@ export const PaywallOffer: React.FC<PaywallOfferProps> = ({
         <div className="bg-white/10 rounded-2xl p-5 sm:p-6 border border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
             <div className="flex items-baseline gap-2 justify-center sm:justify-start">
-              <span className="text-3xl sm:text-4xl font-black text-white">14,900₮</span>
+              <span className="text-3xl sm:text-4xl font-black text-white">9,900₮</span>
               <span className="text-xs text-zinc-300 font-semibold">нэг удаагийн төлбөр</span>
             </div>
             <p className="text-[11px] text-emerald-300 font-bold mt-1 flex items-center gap-1 justify-center sm:justify-start">
@@ -139,7 +139,7 @@ export const PaywallOffer: React.FC<PaywallOfferProps> = ({
             className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 via-anzaar-500 to-rose-500 hover:shadow-indigo-500/30 text-white font-black text-xs sm:text-sm py-4 px-8 rounded-2xl shadow-xl shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 active:scale-95 flex-shrink-0"
           >
             <Lock className="w-4 h-4 text-white" />
-            <span>QPAY-ЭЭР ШУУД НЭЭХ & PDF ТАТАХ (14,900₮)</span>
+            <span>QPAY-ЭЭР ШУУД НЭЭХ & PDF ТАТАХ (9,900₮)</span>
             <ArrowRight className="w-4 h-4 text-white" />
           </button>
         </div>

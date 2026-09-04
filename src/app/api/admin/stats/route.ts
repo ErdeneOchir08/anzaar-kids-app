@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     const paymentInits = events.filter((e) => e.type === 'PAYMENT_INIT').length;
 
     // Total Real Revenue
-    const totalRevenue = payments.reduce((acc, curr) => acc + (curr.amount || 14900), 0);
+    const totalRevenue = payments.reduce((acc, curr) => acc + (curr.amount || 9900), 0);
 
     // Real Archetype Distribution
     const archetypeCounts: Record<string, { title: string; count: number }> = {

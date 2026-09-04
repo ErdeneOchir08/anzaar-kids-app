@@ -107,12 +107,16 @@ export default function ResultPage() {
           <AgeSpecificCard
             archetype={result.primaryArchetype}
             childProfile={result.childProfile}
+            isUnlocked={isUnlocked}
+            onOpenPayment={() => setIsPaymentOpen(true)}
           />
 
           {/* 4. Superpowers & Sensory Growth Areas */}
           <SuperpowersAndGrowth
             archetype={result.primaryArchetype}
             childProfile={result.childProfile}
+            isUnlocked={isUnlocked}
+            onOpenPayment={() => setIsPaymentOpen(true)}
           />
 
           {/* 5. Direct PDF Unlock & Playbook Download Offer */}

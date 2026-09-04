@@ -396,7 +396,7 @@ export default function AdminDashboardPage() {
               <CreditCard className="w-4 h-4 text-indigo-600" />
               <span>Шууд Төлбөрийн Түүх (QPAY)</span>
             </h3>
-            <p className="text-xs text-zinc-500">Баталгаажсан бодит 14,900₮ захиалгууд</p>
+            <p className="text-xs text-zinc-500">Баталгаажсан бодит 9,900₮ захиалгууд</p>
           </div>
 
           <div className="relative w-full sm:w-64">
@@ -445,7 +445,7 @@ export default function AdminDashboardPage() {
                       {p.invoiceId || 'ANZ_MOCK'}
                     </td>
                     <td className="py-3 font-black text-zinc-900">
-                      ₮{(p.amount || 14900).toLocaleString()}
+                      ₮{(p.amount || 9900).toLocaleString()}
                     </td>
                     <td className="py-3 text-right">
                       <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 font-black text-[10.5px] px-2.5 py-0.5 rounded-full">
@@ -486,8 +486,8 @@ export default function AdminDashboardPage() {
                     {act.type === 'PAGE_VIEW' && '🌐 Шинэ зочин вебсайтад хандлаа'}
                     {act.type === 'QUIZ_START' && `📝 ${act.childName || 'Хүүхэд'}-ийн сорилыг эхлүүллээ`}
                     {act.type === 'QUIZ_COMPLETE' && `🎯 ${act.childName || 'Хүүхэд'}-ийн оношилгоо дууслаа: «${act.archetypeTitle}»`}
-                    {act.type === 'PAYMENT_INIT' && `💳 ${act.childName || 'Хүүхэд'}-ийн 14,900₮ QPay нэхэмжлэх үүслээ`}
-                    {act.type === 'PAYMENT_SUCCESS' && `💰 ${act.childName || 'Хүүхэд'}-ийн хөтөч ном 14,900₮-өөр амжилттай худалдан авагдлаа!`}
+                    {act.type === 'PAYMENT_INIT' && `💳 ${act.childName || 'Хүүхэд'}-ийн 9,900₮ QPay нэхэмжлэх үүслээ`}
+                    {act.type === 'PAYMENT_SUCCESS' && `💰 ${act.childName || 'Хүүхэд'}-ийн хөтөч ном 9,900₮-өөр амжилттай худалдан авагдлаа!`}
                   </span>
                 </div>
                 <span className="text-[11px] text-zinc-400 font-mono">

@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       const age = p.ageGroup || '';
       const arch = p.archetypeTitle || '';
       const invoice = p.invoiceId || '';
-      const amount = p.amount || 14900;
+      const amount = p.amount || 9900;
       csv += `"${date}","${child}","${age}","${arch}","${invoice}",${amount},"ТӨЛӨГДСӨН"\n`;
     });
 
