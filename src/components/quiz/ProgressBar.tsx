@@ -11,10 +11,10 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ current, total }) => {
   const percentage = Math.round(((current + 1) / total) * 100);
 
   const getEncouragement = (pct: number) => {
-    if (pct <= 25) return 'Эхлэл маш сайн байна! ✨';
-    if (pct <= 50) return 'Талдаа орлоо, үргэлжлүүлээрэй! 🎯';
-    if (pct <= 75) return 'Маш сайн ойлгож байна! 💡';
-    return 'Сүүлийн асуултууд үлдлээ! 🌟';
+    if (pct <= 25) return 'Амжилттай эхэллээ! ✨';
+    if (pct <= 50) return 'Таны хариултууд маш тодорхой байна! 🎯';
+    if (pct <= 75) return 'Хүүхдийн тань онцлог тодорхой болж байна! 💡';
+    return 'Сүүлийн хэдхэн асуулт үлдлээ! 🌟';
   };
 
   return (

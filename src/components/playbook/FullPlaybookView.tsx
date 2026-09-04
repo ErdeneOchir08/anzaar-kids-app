@@ -201,9 +201,9 @@ export const FullPlaybookView: React.FC<FullPlaybookViewProps> = ({
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-black text-zinc-900">
-                Хямралын үеийн ярианы бэлэн скриптүүд
+                Хүүхэд бухимдаж зөрүүдэлсэн үед хэлэх бэлэн үгс
               </h2>
-              <p className="text-xs text-zinc-500">Уурлаж, зөрүүдэлсэн үед яг юу гэж хэлэх вэ?</p>
+              <p className="text-xs text-zinc-500">Уурлаж, бухимдсан үед яг юу гэж хэлбэл тайвшрах вэ?</p>
             </div>
           </div>
 
@@ -211,7 +211,7 @@ export const FullPlaybookView: React.FC<FullPlaybookViewProps> = ({
           <div className="bg-rose-50/70 border border-rose-200 rounded-3xl p-6 space-y-3">
             <h3 className="text-xs sm:text-sm font-black text-rose-900 flex items-center gap-2 uppercase tracking-wide">
               <Flame className="w-4 h-4 text-rose-600" />
-              3 Алхамт Хямрал Тайлах Дүрэм:
+              Бухимдлыг тайлах 3 алхам:
             </h3>
             <div className="space-y-2 text-xs sm:text-sm text-zinc-800 leading-relaxed font-medium">
               <p><strong>1. Тайвшруулах (Calm):</strong> {archetype.crisisScript.step1Calm}</p>
@@ -235,14 +235,14 @@ export const FullPlaybookView: React.FC<FullPlaybookViewProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-emerald-50/90 p-4 sm:p-5 rounded-2xl border border-emerald-200">
                     <p className="text-xs font-black text-emerald-800 mb-1.5 flex items-center gap-1.5 uppercase">
-                      <Check className="w-4 h-4" /> Ингэж хэлээрэй (Зөв хариу үйлдэл):
+                      <Check className="w-4 h-4" /> Ингэж хэлээрэй (Дэмжих зөв хандлага):
                     </p>
                     <p className="text-xs sm:text-sm text-zinc-800 italic leading-relaxed">{trig.recommendedResponse}</p>
                   </div>
 
                   <div className="bg-rose-50/90 p-4 sm:p-5 rounded-2xl border border-rose-200">
                     <p className="text-xs font-black text-rose-800 mb-1.5 flex items-center gap-1.5 uppercase">
-                      <AlertTriangle className="w-4 h-4" /> Бүү хэлээрэй (Бухимдал нэмэгдүүлнэ):
+                      <AlertTriangle className="w-4 h-4" /> Бүү хэлээрэй (Бухимдлыг нэмэгдүүлнэ):
                     </p>
                     <p className="text-xs sm:text-sm text-zinc-800 italic leading-relaxed">{trig.avoidResponse}</p>
                   </div>
@@ -260,9 +260,9 @@ export const FullPlaybookView: React.FC<FullPlaybookViewProps> = ({
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-black text-zinc-900">
-                Дэлгэц, тоглоом хураах & Орой унтуулах протокол
+                Дэлгэц, тоглоом хураах & Орой тайван унтуулах дэглэм
               </h2>
-              <p className="text-xs text-zinc-500">Шилжилтийн үеийн хэрүүл маргааныг эцэслэх зан үйл</p>
+              <p className="text-xs text-zinc-500">Шилжилтийн үеийн үл ойлголцлыг эцэслэх дадал</p>
             </div>
           </div>
 
