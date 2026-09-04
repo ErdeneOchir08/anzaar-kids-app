@@ -244,19 +244,19 @@ export const QPayModal: React.FC<QPayModalProps> = ({ isOpen, onClose, onSuccess
                 <p className="text-[11px] font-bold text-zinc-700 mb-2">
                   Банкны апп-аараа шууд нээж төлөх:
                 </p>
-                <div className="grid grid-cols-3 gap-2 max-h-40 overflow-y-auto p-1">
-                  {bankUrls.slice(0, 9).map((bank, i) => (
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-48 overflow-y-auto p-1">
+                  {bankUrls.map((bank, i) => (
                     <a
                       key={i}
                       href={bank.link}
-                      className="p-2 rounded-2xl border border-zinc-200 bg-white hover:bg-zinc-50 flex flex-col items-center justify-center gap-1 text-[10.5px] font-bold text-zinc-800 shadow-sm transition-all active:scale-95"
+                      className="p-2.5 rounded-2xl border border-zinc-200 bg-white hover:bg-zinc-50 flex flex-col items-center justify-center gap-1.5 text-[10.5px] font-bold text-zinc-800 shadow-sm transition-all active:scale-95 text-center"
                     >
                       {bank.logo ? (
-                        <img src={bank.logo} alt={bank.name} className="w-6 h-6 rounded-md object-contain" />
+                        <img src={bank.logo} alt={bank.name} className="w-6 h-6 rounded-md object-contain flex-shrink-0" />
                       ) : (
-                        <span className="text-sm">🏦</span>
+                        <span className="text-base">🏦</span>
                       )}
-                      <span className="truncate w-full text-center">{bank.description || bank.name}</span>
+                      <span className="line-clamp-1 w-full text-[10px]">{bank.description || bank.name}</span>
                     </a>
                   ))}
                 </div>

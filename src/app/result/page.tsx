@@ -12,7 +12,7 @@ import { AgeSpecificCard } from '../../components/result/AgeSpecificCard';
 import { ShareStoryCard } from '../../components/result/ShareStoryCard';
 import { PaywallOffer } from '../../components/result/PaywallOffer';
 import { QPayModal } from '../../components/payment/QPayModal';
-import { PlusCircle, ArrowRight, Sparkles, Copy, Check } from 'lucide-react';
+import { PlusCircle, ArrowRight, Sparkles, Copy, Check, Lock, Download } from 'lucide-react';
 
 export default function ResultPage() {
   const router = useRouter();
@@ -76,7 +76,7 @@ export default function ResultPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
+    <div className="max-w-5xl mx-auto px-3.5 sm:px-6 lg:px-8 py-5 sm:py-8 space-y-5 sm:space-y-8 pb-28 lg:pb-8">
       {/* 0. Multi-Child Selector & Switcher Bar */}
       <ChildSelectorBar />
 
@@ -88,9 +88,9 @@ export default function ResultPage() {
       />
 
       {/* 2. Balanced 2-Column Desktop Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 items-start">
         {/* Left Column: Dimensions & Age-Specific Guidance */}
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <DimensionBreakdown scores={result.dimensionScores} />
           <AgeSpecificCard
             archetype={result.primaryArchetype}
@@ -101,7 +101,7 @@ export default function ResultPage() {
         </div>
 
         {/* Right Column: Strengths & Growth Areas (with locked teaser cards) */}
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <SuperpowersAndGrowth
             archetype={result.primaryArchetype}
             childProfile={result.childProfile}
@@ -119,14 +119,14 @@ export default function ResultPage() {
         onOpenPayment={() => setIsPaymentOpen(true)}
       />
 
-      {/* 4. Viral Instagram Story Share Card (Full Width / 2-Col on Desktop) */}
+      {/* 4. Viral Instagram Story Share Card */}
       <ShareStoryCard
         archetype={result.primaryArchetype}
         childProfile={result.childProfile}
       />
 
       {/* 5. Bottom Actions: Copy Link & New Child */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-6 pb-8 border-t border-zinc-200/90">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-6 pb-6 border-t border-zinc-200/90">
         <button
           type="button"
           onClick={handleCopyLink}
@@ -154,6 +154,43 @@ export default function ResultPage() {
           <span>Өөр хүүхдэд шинэ сорил эхлэх</span>
         </button>
       </div>
+
+      {/* 6. Sticky Mobile Bottom Floating Action Bar (High-Converting on Phone) */}
+      {!isUnlocked ? (
+        <div className="fixed bottom-3 inset-x-3 z-40 lg:hidden animate-in fade-in slide-in-from-bottom-3 duration-300">
+          <div className="bg-zinc-950/95 backdrop-blur-xl text-white p-3 rounded-2xl shadow-2xl border border-zinc-800 flex items-center justify-between gap-3">
+            <div className="min-w-0 pl-1">
+              <div className="flex items-center gap-1.5">
+                <span className="text-base font-black text-amber-400">9,900₮</span>
+                <span className="text-[10.5px] text-zinc-400 line-through">19,900₮</span>
+              </div>
+              <p className="text-[10px] text-zinc-300 font-medium truncate">
+                {result.childProfile.name}-ийн 12+ хуудас бүрэн хөтөч
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsPaymentOpen(true)}
+              className="flex-shrink-0 bg-gradient-to-r from-indigo-500 via-anzaar-500 to-rose-500 text-white font-black text-xs py-2.5 px-4 rounded-xl shadow-md active:scale-95 flex items-center gap-1.5"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>Нээх & PDF</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="fixed bottom-3 inset-x-3 z-40 lg:hidden animate-in fade-in slide-in-from-bottom-3 duration-300">
+          <Link
+            href="/guide"
+            className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white p-3.5 rounded-2xl shadow-2xl border border-emerald-500/50 flex items-center justify-center gap-2 text-xs font-black active:scale-95"
+          >
+            <Download className="w-4 h-4" />
+            <span>{result.childProfile.name}-ийн 12+ хуудас PDF номыг татах</span>
+          </Link>
+        </div>
+      )}
 
       {/* QPay Modal */}
       <QPayModal
