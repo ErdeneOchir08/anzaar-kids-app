@@ -51,7 +51,7 @@ async function verifyPayment(invoiceId?: string): Promise<boolean> {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email, invoiceId, childProfile, archetypeId, storyImageBase64 } = body;
+    const { email, invoiceId, childProfile, archetypeId, scores, storyImageBase64 } = body;
 
     // Validate email format
     if (!email || typeof email !== 'string' || !email.includes('@')) {
@@ -78,11 +78,12 @@ export async function POST(req: NextRequest) {
       gender: 'boy',
     };
 
-    // Generate full HTML email
+    // Generate full 12-page HTML email
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://anzaar-kids-app.vercel.app';
     const html = generatePlaybookEmailHtml({
       childProfile: profile,
       archetype,
+      scores,
       webAppUrl: appUrl,
       hasStoryImage: !!storyImageBase64,
     });

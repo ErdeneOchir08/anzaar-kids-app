@@ -94,7 +94,7 @@ export const ShareStoryCard: React.FC<ShareStoryCardProps> = ({
           >
             {/* Decorative Corner Glow */}
             <div
-              className="absolute -top-10 -right-10 w-40 h-40 rounded-full blur-2xl opacity-25 pointer-events-none"
+              className="absolute -top-10 -right-10 w-36 h-36 rounded-full opacity-10 pointer-events-none"
               style={{ backgroundColor: archetype.color }}
             />
 
@@ -115,16 +115,16 @@ export const ShareStoryCard: React.FC<ShareStoryCardProps> = ({
 
             {/* Child & Archetype */}
             <div className="my-3 text-center">
-              <span className="text-[9.5px] font-extrabold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200/60">
+              <span className="text-[9.5px] font-extrabold uppercase tracking-widest text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200/60">
                 ЗАН ТӨЛӨВИЙН ХЭВ ШИНЖ
               </span>
-              <h4 className="text-xl font-black text-zinc-900 mt-1.5 leading-snug">
+              <h4 className="text-xl font-black text-zinc-900 mt-2 leading-tight">
                 {childProfile.name} бол <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-rose-500">
+                <span className="text-indigo-600 font-black text-2xl block mt-1 tracking-tight">
                   «{archetype.title}»
                 </span>
               </h4>
-              <p className="text-[11px] text-zinc-500 font-semibold mt-0.5">
+              <p className="text-[11.5px] text-zinc-600 font-semibold mt-1">
                 {archetype.subtitle}
               </p>
             </div>

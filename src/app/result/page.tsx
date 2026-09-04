@@ -217,6 +217,7 @@ export default function ResultPage() {
         onClose={() => setIsEmailModalOpen(false)}
         archetype={result.primaryArchetype}
         childProfile={result.childProfile}
+        scores={result.dimensionScores}
         invoiceId={result.invoiceId}
       />
     </div>

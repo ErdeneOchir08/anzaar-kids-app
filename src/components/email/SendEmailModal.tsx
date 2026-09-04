@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Archetype, ChildProfile } from '@/types';
+import { Archetype, ChildProfile, DimensionId, DimensionScore } from '@/types';
 import { Mail, CheckCircle2, AlertCircle, Loader2, X, Sparkles, Send } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import confetti from 'canvas-confetti';
@@ -11,6 +11,7 @@ interface SendEmailModalProps {
   onClose: () => void;
   archetype: Archetype;
   childProfile: ChildProfile;
+  scores?: Record<DimensionId, DimensionScore>;
   invoiceId?: string;
 }
 
@@ -19,6 +20,7 @@ export const SendEmailModal: React.FC<SendEmailModalProps> = ({
   onClose,
   archetype,
   childProfile,
+  scores,
   invoiceId,
 }) => {
   const [email, setEmail] = useState('');
@@ -75,6 +77,7 @@ export const SendEmailModal: React.FC<SendEmailModalProps> = ({
           invoiceId: invoiceId || 'mock_paid_default',
           childProfile,
           archetypeId: archetype.id,
+          scores,
           storyImageBase64,
         }),
       });
